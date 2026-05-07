@@ -10,7 +10,6 @@ import {
   useTransform,
 } from "framer-motion"
 import {
-  ArrowRight,
   ShieldCheck,
   HeartPulse,
   Activity,
@@ -218,20 +217,7 @@ export function Hero() {
               compliance, one bill. See it live on a 20-minute call with our team.
             </p>
 
-            <div className="mb-5">
-              <a
-                href="#"
-                className="hero-cta group inline-flex items-center gap-2 bg-accent text-white text-[15px] font-medium font-mono pl-7 pr-3 py-2 rounded-full shadow-[0_8px_24px_-6px_rgba(26,188,217,0.45)] transition-[transform,background-color] duration-200 ease-out hover:-translate-y-0.5 hover:bg-[color:var(--accent-dark)] active:translate-y-0 active:scale-[0.98]"
-              >
-                Request a Demo
-                <span className="grid place-items-center h-8 w-8 rounded-full bg-white/15 ring-1 ring-inset ring-white/25 overflow-hidden">
-                  <ArrowRight
-                    className="hero-cta-arrow h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"
-                    strokeWidth={2.2}
-                  />
-                </span>
-              </a>
-            </div>
+
           </div>
 
           {/* ── Right column: Call flow story ── */}
