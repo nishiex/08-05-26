@@ -179,7 +179,7 @@ export function Hero() {
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
 
           {/* ── Left column: text content ── */}
-          <div className="flex-1 flex flex-col items-start text-left lg:max-w-[520px]">
+          <div className="flex-1 flex flex-col items-center text-center lg:max-w-[520px]">
             <div
               className="hero-eyebrow inline-flex items-center gap-2 bg-white/70 backdrop-blur border border-[#95d9e8]/50 text-accent text-xs font-medium font-mono px-4 py-[6px] rounded-full mb-7 shadow-[0_1px_0_rgba(255,255,255,0.8)_inset,0_6px_20px_-12px_rgba(26,188,217,0.4)]"
             >
