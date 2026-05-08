@@ -24,9 +24,9 @@ export function ShaderGradientSection() {
         const gradientOptions: Partial<ShaderGradientInput> = {
           pixelDensity: 1.5,
           preset: 'interstella' as ShaderGradientPresetName,
-          color1: '#3fe3ee',
-          color2: '#ffffff',
-          color3: '#d6f3f5',
+          color1: '#0a1628',
+          color2: '#0d4f6b',
+          color3: '#1abcd9',
           cameraZoom: 25.00,
           // ❌ remove chromaticAberration and chromaticAberrationStrength
           // If you want that effect, it’s controlled internally by the preset/shader
@@ -70,7 +70,7 @@ export function ShaderGradientSection() {
               as="span"
               animationNum={1}
               timelineRef={sectionRef}
-              className="inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-widest uppercase text-accent border border-accent/40 bg-accent/10 rounded-full px-4 py-1.5 mb-6"
+              className="inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-widest uppercase text-accent border border-accent/40 bg-accent/10 backdrop-blur-sm rounded-full px-4 py-1.5 mb-6"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
               The Platform
@@ -83,8 +83,8 @@ export function ShaderGradientSection() {
               timelineRef={sectionRef}
               className="text-4xl lg:text-5xl font-normal leading-[1.15] tracking-tight mb-4"
             >
-              <span className="block text-[#0d2e35]">One workspace.</span>
-              <span className="block bg-clip-text text-transparent bg-gradient-to-r from-accent to-[#0e8fa8]">
+              <span className="block text-white">One workspace.</span>
+              <span className="block bg-clip-text text-transparent bg-gradient-to-r from-accent to-[#7ee8f5]">
                 Every customer conversation.
               </span>
             </TimelineAnimation>
@@ -94,7 +94,7 @@ export function ShaderGradientSection() {
               as="p"
               animationNum={3}
               timelineRef={sectionRef}
-              className="text-base text-[#2a5560] leading-relaxed max-w-[420px]"
+              className="text-base text-white/70 leading-relaxed max-w-[420px]"
             >
               Stop stitching together disconnected tools. Twiching brings voice, messaging, AI automation, analytics, and customer context into a single workflow.
             </TimelineAnimation>
