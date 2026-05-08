@@ -80,10 +80,10 @@ export function ShaderGradientSection() {
               as="h2"
               animationNum={2}
               timelineRef={sectionRef}
-              className="text-4xl lg:text-5xl font-bold leading-[1.08] tracking-tight mb-4 text-foreground"
+              className="text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight mb-4"
             >
-              One workspace.{" "}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent to-[#0e8fa8]">
+              <span className="block text-[#0d2e35]">One workspace.</span>
+              <span className="block bg-clip-text text-transparent bg-gradient-to-r from-accent to-[#0e8fa8]">
                 Every customer conversation.
               </span>
             </TimelineAnimation>
@@ -93,7 +93,7 @@ export function ShaderGradientSection() {
               as="p"
               animationNum={3}
               timelineRef={sectionRef}
-              className="text-base text-muted-foreground leading-relaxed max-w-[420px]"
+              className="text-base text-[#2a5560] leading-relaxed max-w-[420px]"
             >
               Stop stitching together disconnected tools. Twiching brings voice, messaging, AI automation, analytics, and customer context into a single workflow.
             </TimelineAnimation>
