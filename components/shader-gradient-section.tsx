@@ -94,7 +94,7 @@ export function ShaderGradientSection() {
               as="p"
               animationNum={3}
               timelineRef={sectionRef}
-              className="text-base text-white/70 leading-relaxed max-w-[420px]"
+              className="text-base text-white leading-relaxed max-w-[420px]"
             >
               Stop stitching together disconnected tools. Twiching brings voice, messaging, AI automation, analytics, and customer context into a single workflow.
             </TimelineAnimation>
