@@ -81,7 +81,7 @@ export function ShaderGradientSection() {
               as="h2"
               animationNum={2}
               timelineRef={sectionRef}
-              className="text-4xl lg:text-5xl font-bold leading-[1.15] tracking-tight mb-4"
+              className="text-4xl lg:text-5xl font-normal leading-[1.15] tracking-tight mb-4"
             >
               <span className="block text-[#0d2e35]">One workspace.</span>
               <span className="block bg-clip-text text-transparent bg-gradient-to-r from-accent to-[#0e8fa8]">
