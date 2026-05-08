@@ -498,7 +498,7 @@ export function MegaNav() {
           <div className="hidden lg:flex items-center flex-shrink-0">
             <a
               href="/contact"
-              className="inline-flex items-center gap-2 border border-white/20 bg-white/5 text-white text-[14px] font-medium font-sans px-4 py-2 rounded-full hover:bg-white/10 transition-colors"
+              className="inline-flex items-center gap-2 bg-neutral-800 text-white text-[14px] font-medium font-sans px-5 py-2.5 rounded-full hover:bg-neutral-700 transition-colors"
             >
               <span className="w-2 h-2 rounded-full bg-red-500 flex-shrink-0" />
               Book a call
