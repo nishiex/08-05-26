@@ -7,6 +7,7 @@ import {
   ShaderGradientPresetName,
 } from '@shader-gradient/core'
 import { TimelineAnimation } from '@/components/ui/timeline-animation'
+import { HeroStoryPanel } from '@/components/ui/hero-story-panel'
 
 export function ShaderGradientSection() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -100,7 +101,7 @@ export function ShaderGradientSection() {
           </div>
 
           {/* Right column */}
-        
+          <HeroStoryPanel />
 
         </div>
       </div>
