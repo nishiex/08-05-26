@@ -69,7 +69,7 @@ export function ShaderGradientSection() {
               as="span"
               animationNum={1}
               timelineRef={sectionRef}
-              className="inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-widest uppercase text-accent border border-accent/30 bg-white/10 backdrop-blur-sm rounded-full px-4 py-1.5 mb-6"
+              className="inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-widest uppercase text-accent border border-accent/40 bg-accent/10 rounded-full px-4 py-1.5 mb-6"
             >
               <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
               The Platform
@@ -80,10 +80,12 @@ export function ShaderGradientSection() {
               as="h2"
               animationNum={2}
               timelineRef={sectionRef}
-              className="text-4xl lg:text-5xl font-bold text-white leading-[1.08] tracking-tight mb-4"
+              className="text-4xl lg:text-5xl font-bold leading-[1.08] tracking-tight mb-4 text-foreground"
             >
               One workspace.{" "}
-              <em className="not-italic text-accent font-bold">Every customer conversation.</em>
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent to-[#0e8fa8]">
+                Every customer conversation.
+              </span>
             </TimelineAnimation>
 
             <TimelineAnimation
@@ -91,7 +93,7 @@ export function ShaderGradientSection() {
               as="p"
               animationNum={3}
               timelineRef={sectionRef}
-              className="text-base text-white/70 leading-relaxed max-w-[420px]"
+              className="text-base text-muted-foreground leading-relaxed max-w-[420px]"
             >
               Stop stitching together disconnected tools. Twiching brings voice, messaging, AI automation, analytics, and customer context into a single workflow.
             </TimelineAnimation>
@@ -104,7 +106,7 @@ export function ShaderGradientSection() {
               as="button"
               animationNum={6}
               timelineRef={sectionRef}
-              className="cursor-pointer border border-white/20 bg-white/5 backdrop-blur-md px-8 py-4 rounded-full font-medium text-lg text-white hover:bg-white/10 transition-colors"
+              className="cursor-pointer border border-accent/40 bg-accent/10 backdrop-blur-md px-8 py-4 rounded-full font-semibold text-base text-accent hover:bg-accent/20 transition-colors"
             >
               More about us
             </TimelineAnimation>
