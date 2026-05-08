@@ -18,18 +18,18 @@ import {
 
 // ── Phase 1: Story steps ────────────────────────────────────────────────────
 const STORY_STEPS = [
-  { icon: LayoutDashboard, label: 'One workspace',      sub: 'Every tool your team needs, unified.' },
-  { icon: Radio,           label: 'Every channel',      sub: 'Voice, SMS, and chat — one inbox.'  },
-  { icon: Layers,          label: 'Never switch tabs',  sub: 'Call, message, and review deals here.' },
-  { icon: TrendingUp,      label: 'Zero missed leads',  sub: 'AI picks up every call, day or night.' },
+  { icon: LayoutDashboard, label: 'One workspace', sub: 'Every tool your team needs, unified.' },
+  { icon: Radio, label: 'Every channel', sub: 'Voice, SMS, and chat — one inbox.' },
+  { icon: Layers, label: 'Never switch tabs', sub: 'Call, message, and review deals here.' },
+  { icon: TrendingUp, label: 'Zero missed leads', sub: 'AI picks up every call, day or night.' },
 ]
 
 // ── Phase 2: Agent tasks (simultaneous) ────────────────────────────────────
 const AGENT_TASKS = [
-  { id: 'voice', icon: Phone,        label: 'Cloud Voice',       sub: 'Routing inbound call → Ethan Cooper', delay: 0,    duration: 2600 },
-  { id: 'sms',   icon: MessageSquare,label: 'Omnichannel Inbox', sub: 'SMS thread synced · 3 new messages',  delay: 300,  duration: 3200 },
-  { id: 'ai',    icon: Zap,          label: 'AI Reception',      sub: 'Auto-reply drafted · awaiting send',  delay: 600,  duration: 2400 },
-  { id: 'crm',   icon: BarChart2,    label: 'CRM Sync',          sub: 'Deal updated · HubSpot ↔ Twiching',  delay: 900,  duration: 2900 },
+  { id: 'voice', icon: Phone, label: 'Cloud Voice', sub: 'Routing inbound call → Ethan Cooper', delay: 0, duration: 2600 },
+  { id: 'sms', icon: MessageSquare, label: 'Omnichannel Inbox', sub: 'SMS thread synced · 3 new messages', delay: 300, duration: 3200 },
+  { id: 'ai', icon: Zap, label: 'AI Reception', sub: 'Auto-reply drafted · awaiting send', delay: 600, duration: 2400 },
+  { id: 'crm', icon: BarChart2, label: 'CRM Sync', sub: 'Deal updated · HubSpot ↔ Twiching', delay: 900, duration: 2900 },
 ]
 
 const TAGLINE = 'Twiching combines cloud calling, AI reception, omnichannel inboxes, CRM sync, and live analytics into one modern workspace.'
@@ -38,18 +38,18 @@ type Phase = 'story' | 'agent'
 type TaskStatus = 'idle' | 'running' | 'done'
 
 export function HeroStoryPanel() {
-  const panelRef      = useRef<HTMLDivElement>(null)
-  const timers        = useRef<ReturnType<typeof setTimeout>[]>([])
+  const panelRef = useRef<HTMLDivElement>(null)
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([])
 
-  const [phase, setPhase]           = useState<Phase>('story')
-  const [cycleKey, setCycleKey]     = useState(0)
+  const [phase, setPhase] = useState<Phase>('story')
+  const [cycleKey, setCycleKey] = useState(0)
 
   // Story phase state
-  const [storyStep, setStoryStep]   = useState(-1)   // -1 = none visible yet
-  const [doneSteps, setDoneSteps]   = useState<number[]>([])
+  const [storyStep, setStoryStep] = useState(-1)   // -1 = none visible yet
+  const [doneSteps, setDoneSteps] = useState<number[]>([])
 
   // Agent phase state
-  const [statuses, setStatuses]     = useState<TaskStatus[]>(AGENT_TASKS.map(() => 'idle'))
+  const [statuses, setStatuses] = useState<TaskStatus[]>(AGENT_TASKS.map(() => 'idle'))
   const [showTagline, setShowTagline] = useState(false)
 
   const clear = () => timers.current.forEach(clearTimeout)
@@ -118,7 +118,7 @@ export function HeroStoryPanel() {
 
   return (
     <div ref={panelRef} className="flex-1 flex items-center justify-center lg:justify-end opacity-0">
-      <div className="w-full max-w-[400px] rounded-2xl overflow-hidden border border-[#0d2e35] bg-white shadow-[0_16px_48px_-12px_rgba(13,46,53,0.14)]">
+      <div className="w-full max-w-[400px] rounded-2xl overflow-hidden border border-[#0d2e35]/10 bg-white shadow-[0_16px_48px_-12px_rgba(13,46,53,0.14)]">
 
         {/* Header */}
         <div className="flex items-center gap-2 px-5 py-3.5 border-b border-[#0d2e35]/8">
@@ -135,10 +135,10 @@ export function HeroStoryPanel() {
         {phase === 'story' && (
           <div className="px-5 py-4 flex flex-col gap-3">
             {STORY_STEPS.map((step, i) => {
-              const Icon    = step.icon
+              const Icon = step.icon
               const visible = i <= storyStep
-              const done    = doneSteps.includes(i)
-              const active  = i === storyStep && !done
+              const done = doneSteps.includes(i)
+              const active = i === storyStep && !done
 
               return (
                 <div
@@ -150,7 +150,7 @@ export function HeroStoryPanel() {
                 >
                   <div className={[
                     'w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5 transition-all duration-500',
-                    done   ? 'bg-accent text-white shadow-[0_0_10px_rgba(26,188,217,0.3)]' : '',
+                    done ? 'bg-accent text-white shadow-[0_0_10px_rgba(26,188,217,0.3)]' : '',
                     active ? 'bg-accent/12 text-accent' : '',
                     !visible ? 'bg-[#0d2e35]/5 text-[#0d2e35]/20' : '',
                   ].join(' ')}>
@@ -196,15 +196,15 @@ export function HeroStoryPanel() {
             <div className="px-5 py-3 flex flex-col gap-2.5">
               {AGENT_TASKS.map((task, i) => {
                 const status = statuses[i]
-                const Icon   = task.icon
+                const Icon = task.icon
                 return (
                   <div key={task.id} className="flex flex-col gap-1">
                     <div className="flex items-center gap-3">
                       <div className={[
                         'w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-500',
-                        status === 'done'    ? 'bg-accent text-white shadow-[0_0_10px_rgba(26,188,217,0.35)]' : '',
+                        status === 'done' ? 'bg-accent text-white shadow-[0_0_10px_rgba(26,188,217,0.35)]' : '',
                         status === 'running' ? 'bg-accent/12 text-accent' : '',
-                        status === 'idle'    ? 'bg-[#0d2e35]/5 text-[#0d2e35]/25' : '',
+                        status === 'idle' ? 'bg-[#0d2e35]/5 text-[#0d2e35]/25' : '',
                       ].join(' ')}>
                         {status === 'done'
                           ? <CheckCircle2 className="w-4 h-4" strokeWidth={2} />
@@ -223,16 +223,16 @@ export function HeroStoryPanel() {
                       </div>
                       <span className={[
                         'text-[10px] font-mono px-2 py-0.5 rounded-full flex-shrink-0 transition-all duration-500',
-                        status === 'done'    ? 'bg-accent/10 text-accent' : '',
+                        status === 'done' ? 'bg-accent/10 text-accent' : '',
                         status === 'running' ? 'bg-amber-50 text-amber-500' : '',
-                        status === 'idle'    ? 'bg-[#0d2e35]/5 text-[#0d2e35]/20' : '',
+                        status === 'idle' ? 'bg-[#0d2e35]/5 text-[#0d2e35]/20' : '',
                       ].join(' ')}>
                         {status === 'done' ? 'done' : status === 'running' ? 'running' : 'queued'}
                       </span>
                     </div>
                     {status === 'running' && <ShimmerLoader height="2px" className="ml-11" rounded="rounded-full" />}
-                    {status === 'done'    && <div className="ml-11 h-[2px] rounded-full bg-accent/20" />}
-                    {status === 'idle'    && <div className="ml-11 h-[2px] rounded-full bg-[#0d2e35]/5" />}
+                    {status === 'done' && <div className="ml-11 h-[2px] rounded-full bg-accent/20" />}
+                    {status === 'idle' && <div className="ml-11 h-[2px] rounded-full bg-[#0d2e35]/5" />}
                   </div>
                 )
               })}
