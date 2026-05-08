@@ -246,6 +246,18 @@
   letter-spacing: -0.04em;
 }
 
+/* Shimmer animation */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+/* Cursor blink */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 /* Smooth scroll */
 html {
   scroll-behavior: smooth;

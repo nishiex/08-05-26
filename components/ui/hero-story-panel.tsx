@@ -1,168 +1,201 @@
 'use client'
 
-import { useEffect, useRef, useState, useCallback } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { TypeWritter } from '@/components/ui/typing-writter'
-import { Phone, MessageSquare, Layout, Zap } from 'lucide-react'
+import { ShimmerLoader } from '@/components/ui/shimmer-loader'
+import { Phone, MessageSquare, Zap, BarChart2, CheckCircle2 } from 'lucide-react'
 
-const STEPS = [
+const TASKS = [
   {
-    icon: Layout,
-    label: 'One workspace',
-    detail: 'Every tool your team needs, unified in one place.',
-  },
-  {
-    icon: MessageSquare,
-    label: 'Every channel',
-    detail: 'Voice, SMS, and chat — handled from one inbox.',
-  },
-  {
+    id: 'voice',
     icon: Phone,
-    label: 'Never switch tabs',
-    detail: 'Call, message, and review deals without leaving.',
+    label: 'Cloud Voice',
+    sub: 'Routing inbound call → Ethan Cooper',
+    delay: 0,
+    duration: 2600,
   },
   {
+    id: 'sms',
+    icon: MessageSquare,
+    label: 'Omnichannel Inbox',
+    sub: 'SMS thread synced · 3 new messages',
+    delay: 350,
+    duration: 3200,
+  },
+  {
+    id: 'ai',
     icon: Zap,
-    label: 'Zero missed leads',
-    detail: 'AI reception picks up every call, day or night.',
+    label: 'AI Reception',
+    sub: 'Auto-reply drafted · awaiting send',
+    delay: 700,
+    duration: 2400,
+  },
+  {
+    id: 'crm',
+    icon: BarChart2,
+    label: 'CRM Sync',
+    sub: 'Deal updated · HubSpot ↔ Twiching',
+    delay: 1050,
+    duration: 2900,
   },
 ]
 
 const TAGLINE =
   'Twiching combines cloud calling, AI reception, omnichannel inboxes, CRM sync, and live analytics into one modern workspace.'
 
+type Status = 'idle' | 'running' | 'done'
+
 export function HeroStoryPanel() {
-  const [activeStep, setActiveStep]   = useState(0)
-  const [typing, setTyping]           = useState(true)
+  const panelRef   = useRef<HTMLDivElement>(null)
+  const timers     = useRef<ReturnType<typeof setTimeout>[]>([])
+  const [statuses, setStatuses]     = useState<Status[]>(TASKS.map(() => 'idle'))
   const [showTagline, setShowTagline] = useState(false)
-  const [completedSteps, setCompletedSteps] = useState<number[]>([])
+  const [cycleKey, setCycleKey]     = useState(0)
 
-  const panelRef  = useRef<HTMLDivElement>(null)
-  const rowRefs   = useRef<(HTMLDivElement | null)[]>([])
-
-  // Panel entrance
   useEffect(() => {
-    if (!panelRef.current) return
     gsap.fromTo(
       panelRef.current,
       { opacity: 0, y: 28 },
-      { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out', delay: 0.5 }
+      { opacity: 1, y: 0, duration: 0.85, ease: 'power3.out', delay: 0.5 },
     )
+    runCycle()
+    return () => timers.current.forEach(clearTimeout)
   }, [])
 
-  // Row highlight when step changes
-  useEffect(() => {
-    const row = rowRefs.current[activeStep]
-    if (row) {
-      gsap.fromTo(row, { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.4, ease: 'power2.out' })
-    }
-  }, [activeStep])
+  function runCycle() {
+    timers.current.forEach(clearTimeout)
+    timers.current = []
+    setStatuses(TASKS.map(() => 'idle'))
+    setShowTagline(false)
 
-  const handleTypingComplete = useCallback(() => {
-    setTyping(false)
-    const next = activeStep + 1
+    // Fire each task at its delay — all run simultaneously
+    TASKS.forEach((task, i) => {
+      const t1 = setTimeout(() => {
+        setStatuses(prev => { const s = [...prev]; s[i] = 'running'; return s })
+        const t2 = setTimeout(() => {
+          setStatuses(prev => { const s = [...prev]; s[i] = 'done'; return s })
+        }, task.duration)
+        timers.current.push(t2)
+      }, task.delay + 800)
+      timers.current.push(t1)
+    })
 
-    if (next < STEPS.length) {
-      setTimeout(() => {
-        setCompletedSteps(prev => [...prev, activeStep])
-        setActiveStep(next)
-        setTyping(true)
-      }, 700)
-    } else {
-      setCompletedSteps(prev => [...prev, activeStep])
-      setTimeout(() => setShowTagline(true), 600)
-    }
-  }, [activeStep])
+    // Show tagline after all done, then loop
+    const maxDone = Math.max(...TASKS.map(t => t.delay + t.duration)) + 1000
+    const t3 = setTimeout(() => {
+      setShowTagline(true)
+      setCycleKey(k => k + 1)
+    }, maxDone + 800)
+    const t4 = setTimeout(() => runCycle(), maxDone + 4200)
+    timers.current.push(t3, t4)
+  }
 
   return (
-    <div ref={panelRef} className="flex-1 flex justify-center lg:justify-end opacity-0">
-      <div className="w-full max-w-[400px] rounded-2xl overflow-hidden border border-[#0d2e35]/12 bg-white/70 backdrop-blur-xl shadow-[0_20px_60px_-15px_rgba(13,46,53,0.18),0_0_0_1px_rgba(26,188,217,0.08)]">
+    <div ref={panelRef} className="flex-1 flex items-center justify-center lg:justify-end opacity-0">
+      <div className="w-full max-w-[400px] rounded-2xl overflow-hidden border border-[#0d2e35]/10 bg-white/75 backdrop-blur-xl shadow-[0_16px_48px_-12px_rgba(13,46,53,0.14)]">
 
         {/* Header */}
-        <div className="flex items-center px-5 py-3.5 border-b border-[#0d2e35]/8">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-            <span className="text-[11px] font-mono font-medium text-[#0d2e35]/50 tracking-widest uppercase">
-              twiching.live
-            </span>
-          </div>
+        <div className="flex items-center gap-2 px-5 py-3.5 border-b border-[#0d2e35]/8">
+          <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+          <span className="text-[11px] font-mono font-medium text-[#0d2e35]/45 tracking-widest uppercase">
+            twiching.live
+          </span>
+          <span className="ml-auto text-[10px] font-mono px-2 py-0.5 rounded-full bg-accent/10 text-accent">
+            agent · active
+          </span>
         </div>
 
-        {/* Steps */}
-        <div className="px-5 py-4 flex flex-col divide-y divide-[#0d2e35]/6">
-          {STEPS.map((step, i) => {
-            const Icon      = step.icon
-            const isDone    = completedSteps.includes(i)
-            const isActive  = i === activeStep
-            const isFuture  = !isDone && !isActive
+        {/* Prompt */}
+        <div className="px-5 pt-4 pb-3.5 border-b border-[#0d2e35]/6">
+          <p className="text-[10px] font-mono uppercase tracking-widest text-[#0d2e35]/35 mb-1.5">Request</p>
+          <TypeWritter
+            key={`prompt-${cycleKey}`}
+            text="Handle everything, simultaneously."
+            charDelay={44}
+            className="text-[13px] font-mono text-[#0d2e35] font-medium"
+          />
+        </div>
 
+        {/* Task rows */}
+        <div className="px-5 py-3 flex flex-col gap-2.5">
+          {TASKS.map((task, i) => {
+            const status = statuses[i]
+            const Icon   = task.icon
             return (
-              <div
-                key={step.label}
-                ref={(el) => { rowRefs.current[i] = el }}
-                className={[
-                  'flex items-start gap-3.5 py-4 transition-opacity duration-300',
-                  isFuture ? 'opacity-30' : 'opacity-100',
-                ].join(' ')}
-              >
-                {/* Icon bubble */}
-                <div className={[
-                  'flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center transition-colors duration-300',
-                  isDone   ? 'bg-accent/15' : '',
-                  isActive ? 'bg-accent text-white shadow-[0_4px_12px_-2px_rgba(26,188,217,0.5)]' : '',
-                  isFuture ? 'bg-[#0d2e35]/8' : '',
-                ].join(' ')}>
-                  <Icon
-                    size={14}
-                    className={[
-                      'transition-colors duration-300',
-                      isDone   ? 'text-accent' : '',
-                      isActive ? 'text-white'  : '',
-                      isFuture ? 'text-[#0d2e35]/40' : '',
-                    ].join(' ')}
-                    strokeWidth={2.2}
-                  />
+              <div key={task.id} className="flex flex-col gap-1">
+                <div className="flex items-center gap-3">
+                  {/* Icon bubble */}
+                  <div className={[
+                    'w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-500',
+                    status === 'done'    ? 'bg-accent text-white shadow-[0_0_10px_rgba(26,188,217,0.35)]' : '',
+                    status === 'running' ? 'bg-accent/12 text-accent' : '',
+                    status === 'idle'    ? 'bg-[#0d2e35]/5 text-[#0d2e35]/25' : '',
+                  ].join(' ')}>
+                    {status === 'done' ? (
+                      <CheckCircle2 className="w-4 h-4" strokeWidth={2} />
+                    ) : (
+                      <Icon className={['w-4 h-4 transition-all duration-500', status === 'running' ? 'animate-pulse' : ''].join(' ')} strokeWidth={2} />
+                    )}
+                  </div>
+
+                  {/* Label + sub */}
+                  <div className="flex-1 min-w-0">
+                    <p className={[
+                      'text-[13px] font-medium leading-tight transition-colors duration-500',
+                      status === 'done'    ? 'text-accent' : '',
+                      status === 'running' ? 'text-[#0d2e35]' : '',
+                      status === 'idle'    ? 'text-[#0d2e35]/25' : '',
+                    ].join(' ')}>
+                      {task.label}
+                    </p>
+                    <p className={[
+                      'text-[11px] font-mono truncate transition-colors duration-500',
+                      status !== 'idle' ? 'text-[#0d2e35]/45' : 'text-[#0d2e35]/18',
+                    ].join(' ')}>
+                      {task.sub}
+                    </p>
+                  </div>
+
+                  {/* Badge */}
+                  <span className={[
+                    'text-[10px] font-mono px-2 py-0.5 rounded-full flex-shrink-0 transition-all duration-500',
+                    status === 'done'    ? 'bg-accent/10 text-accent' : '',
+                    status === 'running' ? 'bg-amber-50 text-amber-500' : '',
+                    status === 'idle'    ? 'bg-[#0d2e35]/5 text-[#0d2e35]/20' : '',
+                  ].join(' ')}>
+                    {status === 'done' ? 'done' : status === 'running' ? 'running' : 'queued'}
+                  </span>
                 </div>
 
-                {/* Text */}
-                <div className="flex flex-col gap-0.5 pt-0.5 min-w-0">
-                  <span className={[
-                    'text-[13px] font-semibold leading-tight',
-                    isDone   ? 'text-accent/70'  : '',
-                    isActive ? 'text-[#0d2e35]'  : '',
-                    isFuture ? 'text-[#0d2e35]'  : '',
-                  ].join(' ')}>
-                    {isActive && typing ? (
-                      <TypeWritter
-                        text={step.label}
-                        charDelay={45}
-                        onComplete={handleTypingComplete}
-                      />
-                    ) : (
-                      step.label
-                    )}
-                  </span>
-                  {(isDone || isActive) && (
-                    <span className="text-[11.5px] text-[#2a5560]/65 leading-snug">{step.detail}</span>
-                  )}
-                </div>
+                {/* Progress track */}
+                {status === 'running' && (
+                  <ShimmerLoader height="2px" className="ml-11" rounded="rounded-full" />
+                )}
+                {status === 'done' && (
+                  <div className="ml-11 h-[2px] rounded-full bg-accent/20" />
+                )}
+                {status === 'idle' && (
+                  <div className="ml-11 h-[2px] rounded-full bg-[#0d2e35]/5" />
+                )}
               </div>
             )
           })}
         </div>
 
-        {/* Tagline footer */}
+        {/* Tagline */}
         <div className={[
-          'px-5 pb-5 transition-opacity duration-500',
+          'px-5 py-4 border-t border-[#0d2e35]/8 transition-opacity duration-700',
           showTagline ? 'opacity-100' : 'opacity-0 pointer-events-none',
         ].join(' ')}>
-          <div className="pt-4 border-t border-accent/15">
+          {showTagline && (
             <TypeWritter
+              key={cycleKey}
               text={TAGLINE}
-              charDelay={14}
-              className="block text-[11.5px] font-mono text-[#2a5560]/75 leading-relaxed"
+              charDelay={16}
+              className="text-[11.5px] font-mono text-[#2a5560]/65 leading-relaxed"
             />
-          </div>
+          )}
         </div>
 
       </div>
