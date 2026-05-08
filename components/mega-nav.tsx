@@ -421,7 +421,6 @@ export function MegaNav() {
 
       <header
         className="sticky top-0 z-30 border-b border-white/5"
-        style={{ background: 'linear-gradient(to right, #1a2aff 0%, #0d0f1a 55%, #000000 100%)' }}
         onMouseLeave={handleMouseLeave}
       >
         <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-[5%] h-14 flex items-center justify-between gap-6">
