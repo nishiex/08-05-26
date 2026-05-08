@@ -14,6 +14,9 @@ import {
   Zap,
   BarChart2,
   CheckCircle2,
+  Mic,
+  FileText,
+  Share2,
 } from 'lucide-react'
 
 // ── Phase 1: Story steps ────────────────────────────────────────────────────
@@ -26,10 +29,13 @@ const STORY_STEPS = [
 
 // ── Phase 2: Agent tasks (simultaneous) ────────────────────────────────────
 const AGENT_TASKS = [
-  { id: 'voice', icon: Phone, label: 'Cloud Voice', sub: 'Routing inbound call → Ethan Cooper', delay: 0, duration: 2600 },
-  { id: 'sms', icon: MessageSquare, label: 'Omnichannel Inbox', sub: 'SMS thread synced · 3 new messages', delay: 300, duration: 3200 },
-  { id: 'ai', icon: Zap, label: 'AI Reception', sub: 'Auto-reply drafted · awaiting send', delay: 600, duration: 2400 },
-  { id: 'crm', icon: BarChart2, label: 'CRM Sync', sub: 'Deal updated · HubSpot ↔ Twiching', delay: 900, duration: 2900 },
+  { id: 'voice',      icon: Phone,        label: 'Cloud Voice',        sub: 'Routing inbound call → Ethan Cooper',     delay: 0,    duration: 2600 },
+  { id: 'sms',        icon: MessageSquare,label: 'Omnichannel Inbox',   sub: 'SMS thread synced · 3 new messages',      delay: 300,  duration: 3200 },
+  { id: 'ai',         icon: Zap,          label: 'AI Reception',        sub: 'Auto-reply drafted · awaiting send',      delay: 600,  duration: 2400 },
+  { id: 'crm',        icon: BarChart2,    label: 'CRM Sync',            sub: 'Deal updated · HubSpot ↔ Twiching',       delay: 900,  duration: 2900 },
+  { id: 'recording',  icon: Mic,          label: 'Call Recording',      sub: 'Recording saved · 4m 12s',                delay: 1100, duration: 2200 },
+  { id: 'transcript', icon: FileText,     label: 'Transcript',          sub: 'AI transcript ready · 94% accuracy',      delay: 3400, duration: 3100 },
+  { id: 'voicemail',  icon: Share2,       label: 'Voicemail Share',     sub: 'Link generated · shared to team inbox',   delay: 1300, duration: 2700 },
 ]
 
 const TAGLINE = 'Twiching combines cloud calling, AI reception, omnichannel inboxes, CRM sync, and live analytics into one modern workspace.'
