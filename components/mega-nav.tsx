@@ -420,24 +420,25 @@ export function MegaNav() {
       </a>
 
       <header
-        className="sticky top-0 z-30 bg-white/10 backdrop-blur-md border-b border-white/10"
+        className="sticky top-0 z-30 border-b border-white/5"
+        style={{ background: 'linear-gradient(to right, #1a2aff 0%, #0d0f1a 55%, #000000 100%)' }}
         onMouseLeave={handleMouseLeave}
       >
-        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-[5%] h-16 flex items-center justify-between gap-6">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-[5%] h-14 flex items-center justify-between gap-6">
 
           {/* Logo */}
           <a href="/" className="flex items-center flex-shrink-0" aria-label="Twiching home">
             <img
               src="/twiching-logo.png"
               alt="Twiching General Trading"
-              width={160}
-              height={60}
-              className="h-14 sm:h-12 w-auto object-contain"
+              width={140}
+              height={48}
+              className="h-10 w-auto object-contain brightness-0 invert"
             />
           </a>
 
-          {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-0.5" aria-label="Main navigation">
+          {/* Desktop nav — centered */}
+          <nav className="hidden lg:flex items-center gap-1 absolute left-1/2 -translate-x-1/2" aria-label="Main navigation">
             {/* Product */}
             <button
               onMouseEnter={() => handleMouseEnter("product")}
@@ -448,8 +449,7 @@ export function MegaNav() {
               }}
               aria-expanded={open === "product"}
               aria-haspopup="true"
-              className={`flex items-center gap-1 px-3.5 py-2 rounded-full text-[14px] font-sans font-medium transition-colors ${open === "product" ? "bg-slate-100 text-black" : "text-gray-600 hover:text-black hover:bg-slate-50"
-                }`}
+              className={`flex items-center gap-1 px-3.5 py-1.5 rounded-full text-[14px] font-sans font-medium transition-colors ${open === "product" ? "text-white bg-white/10" : "text-white/80 hover:text-white hover:bg-white/10"}`}
             >
               Product
               <Chevron open={open === "product"} />
@@ -465,8 +465,7 @@ export function MegaNav() {
               }}
               aria-expanded={open === "solutions"}
               aria-haspopup="true"
-              className={`flex items-center gap-1 px-3.5 py-2 rounded-full text-[14px] font-sans font-medium transition-colors ${open === "solutions" ? "bg-slate-100 text-black" : "text-gray-600 hover:text-black hover:bg-slate-50"
-                }`}
+              className={`flex items-center gap-1 px-3.5 py-1.5 rounded-full text-[14px] font-sans font-medium transition-colors ${open === "solutions" ? "text-white bg-white/10" : "text-white/80 hover:text-white hover:bg-white/10"}`}
             >
               Solutions
               <Chevron open={open === "solutions"} />
@@ -482,41 +481,34 @@ export function MegaNav() {
               }}
               aria-expanded={open === "resources"}
               aria-haspopup="true"
-              className={`flex items-center gap-1 px-3.5 py-2 rounded-full text-[14px] font-sans font-medium transition-colors ${open === "resources" ? "bg-slate-100 text-black" : "text-gray-600 hover:text-black hover:bg-slate-50"
-                }`}
+              className={`flex items-center gap-1 px-3.5 py-1.5 rounded-full text-[14px] font-sans font-medium transition-colors ${open === "resources" ? "text-white bg-white/10" : "text-white/80 hover:text-white hover:bg-white/10"}`}
             >
               Resources
               <Chevron open={open === "resources"} />
             </button>
 
-            {/* Pricing and plan */}
             <a
               href="/pricing"
-              className="px-3.5 py-2 text-[14px] font-sans font-medium text-gray-600 hover:text-black hover:bg-slate-50 rounded-full transition-colors"
+              className="px-3.5 py-1.5 text-[14px] font-sans font-medium text-white/80 hover:text-white hover:bg-white/10 rounded-full transition-colors"
             >
               Pricing
             </a>
           </nav>
 
-          {/* Desktop right CTAs */}
-          <div className="hidden lg:flex items-center gap-2 flex-shrink-0">
+          {/* Desktop right — Book a call */}
+          <div className="hidden lg:flex items-center flex-shrink-0">
             <a
-              href="#"
-              className="text-[14px] font-sans font-medium text-gray-600 hover:text-black px-3 py-2"
+              href="/contact"
+              className="inline-flex items-center gap-2 border border-white/20 bg-white/5 text-white text-[14px] font-medium font-sans px-4 py-2 rounded-full hover:bg-white/10 transition-colors"
             >
-              Sign In
-            </a>
-            <a
-              href="/pricing"
-              className="inline-flex items-center gap-1.5 bg-[#1abcd9] text-white text-[14px] font-medium font-sans px-5 py-2 rounded-full hover:bg-[#1797ac] transition-colors"
-            >
-              Start Free Trial
+              <span className="w-2 h-2 rounded-full bg-red-500 flex-shrink-0" />
+              Book a call
             </a>
           </div>
 
           {/* Mobile hamburger */}
           <button
-            className="lg:hidden p-2 text-gray-700 rounded-lg hover:bg-slate-50 transition-colors"
+            className="lg:hidden p-2 text-white/80 rounded-lg hover:bg-white/10 transition-colors"
             aria-label={mobileOpen ? "Close menu" : "Open menu"}
             onClick={() => { setMobileOpen(!mobileOpen); setMobileSection(null) }}
           >
