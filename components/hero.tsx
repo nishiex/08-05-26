@@ -10,22 +10,14 @@ import {
   useTransform,
 } from "framer-motion"
 import {
-  ShieldCheck,
-  HeartPulse,
-  Activity,
-  Check,
   PhoneIncoming,
   MessageSquare,
   Bot,
   Hash,
+  Phone,
+  ArrowRight,
 } from "lucide-react"
-import dynamic from "next/dynamic"
 import { ShaderGradientHero } from "@/components/shader-gradient-hero"
-
-const OrbitingSkills = dynamic(() => import("@/components/ui/orbiting-skills"), {
-  ssr: false,
-  loading: () => <div className="w-[min(100vw-40px,450px)] aspect-square" />,
-})
 
 /* ─── Hero ─────────────────────────────────────────────────────────────────── */
 export function Hero() {
@@ -34,6 +26,9 @@ export function Hero() {
 
   const titleLine1 = ["Your", "business", "phone."]
   const titleLine2 = ["Built", "for", "how", "you", "actually", "work."]
+
+  // unused — kept for GSAP selector compat
+
 
   useEffect(() => {
     const root = rootRef.current
