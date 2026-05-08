@@ -100,17 +100,7 @@ export function ShaderGradientSection() {
           </div>
 
           {/* Right column */}
-          <div className="flex-1 flex items-center justify-center lg:justify-end">
-            <TimelineAnimation
-              once={true}
-              as="button"
-              animationNum={6}
-              timelineRef={sectionRef}
-              className="cursor-pointer border border-accent/40 bg-accent/10 backdrop-blur-md px-8 py-4 rounded-full font-semibold text-base text-accent hover:bg-accent/20 transition-colors"
-            >
-              More about us
-            </TimelineAnimation>
-          </div>
+        
 
         </div>
       </div>
