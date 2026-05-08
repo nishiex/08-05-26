@@ -38,7 +38,6 @@ export function HeroStoryPanel() {
   const [completedSteps, setCompletedSteps] = useState<number[]>([])
 
   const panelRef  = useRef<HTMLDivElement>(null)
-  const barRef    = useRef<HTMLDivElement>(null)
   const rowRefs   = useRef<(HTMLDivElement | null)[]>([])
 
   // Panel entrance
@@ -51,11 +50,8 @@ export function HeroStoryPanel() {
     )
   }, [])
 
-  // Progress bar and row highlight when step changes
+  // Row highlight when step changes
   useEffect(() => {
-    const pct = ((activeStep) / (STEPS.length - 1)) * 100
-    gsap.to(barRef.current, { width: `${pct}%`, duration: 0.55, ease: 'power2.out' })
-
     const row = rowRefs.current[activeStep]
     if (row) {
       gsap.fromTo(row, { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.4, ease: 'power2.out' })
@@ -82,26 +78,14 @@ export function HeroStoryPanel() {
     <div ref={panelRef} className="flex-1 flex justify-center lg:justify-end opacity-0">
       <div className="w-full max-w-[400px] rounded-2xl overflow-hidden border border-[#0d2e35]/12 bg-white/70 backdrop-blur-xl shadow-[0_20px_60px_-15px_rgba(13,46,53,0.18),0_0_0_1px_rgba(26,188,217,0.08)]">
 
-        {/* Top progress bar track */}
-        <div className="h-[3px] bg-accent/10 relative">
-          <div
-            ref={barRef}
-            className="absolute left-0 top-0 h-full bg-gradient-to-r from-accent to-[#0e8fa8] rounded-full"
-            style={{ width: '0%' }}
-          />
-        </div>
-
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-[#0d2e35]/8">
+        <div className="flex items-center px-5 py-3.5 border-b border-[#0d2e35]/8">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
             <span className="text-[11px] font-mono font-medium text-[#0d2e35]/50 tracking-widest uppercase">
               twiching.live
             </span>
           </div>
-          <span className="text-[11px] font-mono text-accent/70">
-            {activeStep + 1} / {STEPS.length}
-          </span>
         </div>
 
         {/* Steps */}
