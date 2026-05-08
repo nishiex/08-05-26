@@ -57,17 +57,60 @@ export function ShaderGradientSection() {
         id="shader-gradient"
         className="absolute inset-0 w-full h-full"
       />
-      {/* Centered button overlay */}
-      <div className="absolute inset-0 flex items-center justify-center z-10">
-        <TimelineAnimation
-          once={true}
-          as="button"
-          animationNum={6}
-          timelineRef={sectionRef}
-          className="cursor-pointer border border-white/20 bg-white/5 backdrop-blur-md px-8 py-4 rounded-full font-medium text-lg text-white"
-        >
-          More about us
-        </TimelineAnimation>
+
+      {/* Left / Right content overlay */}
+      <div className="absolute inset-0 z-10 flex items-center">
+        <div className="w-full max-w-[1280px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
+
+          {/* Left column */}
+          <div className="flex-1 flex flex-col items-start text-left max-w-[520px]">
+            <TimelineAnimation
+              once={true}
+              as="span"
+              animationNum={1}
+              timelineRef={sectionRef}
+              className="inline-flex items-center gap-1.5 text-[11px] font-semibold tracking-widest uppercase text-accent border border-accent/30 bg-white/10 backdrop-blur-sm rounded-full px-4 py-1.5 mb-6"
+            >
+              <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" />
+              The Platform
+            </TimelineAnimation>
+
+            <TimelineAnimation
+              once={true}
+              as="h2"
+              animationNum={2}
+              timelineRef={sectionRef}
+              className="text-4xl lg:text-5xl font-bold text-white leading-[1.08] tracking-tight mb-4"
+            >
+              One workspace.{" "}
+              <em className="not-italic text-accent font-bold">Every customer conversation.</em>
+            </TimelineAnimation>
+
+            <TimelineAnimation
+              once={true}
+              as="p"
+              animationNum={3}
+              timelineRef={sectionRef}
+              className="text-base text-white/70 leading-relaxed max-w-[420px]"
+            >
+              Stop stitching together disconnected tools. Twiching brings voice, messaging, AI automation, analytics, and customer context into a single workflow.
+            </TimelineAnimation>
+          </div>
+
+          {/* Right column */}
+          <div className="flex-1 flex items-center justify-center lg:justify-end">
+            <TimelineAnimation
+              once={true}
+              as="button"
+              animationNum={6}
+              timelineRef={sectionRef}
+              className="cursor-pointer border border-white/20 bg-white/5 backdrop-blur-md px-8 py-4 rounded-full font-medium text-lg text-white hover:bg-white/10 transition-colors"
+            >
+              More about us
+            </TimelineAnimation>
+          </div>
+
+        </div>
       </div>
     </section>
   )
