@@ -3,43 +3,64 @@
 import { useEffect, useRef, useState, useCallback } from 'react'
 import gsap from 'gsap'
 import { TypeWritter } from '@/components/ui/typing-writter'
+import { Phone, MessageSquare, Layout, Zap } from 'lucide-react'
 
 const STEPS = [
-  { label: 'One workspace',         detail: 'Every tool your team needs, unified.' },
-  { label: 'Every channel',         detail: 'Voice, SMS, chat — all in one inbox.'  },
-  { label: 'Never switch tabs',     detail: 'Call, message, and review in one view.' },
-  { label: 'Zero missed leads',     detail: 'AI reception picks up every call.'      },
+  {
+    icon: Layout,
+    label: 'One workspace',
+    detail: 'Every tool your team needs, unified in one place.',
+  },
+  {
+    icon: MessageSquare,
+    label: 'Every channel',
+    detail: 'Voice, SMS, and chat — handled from one inbox.',
+  },
+  {
+    icon: Phone,
+    label: 'Never switch tabs',
+    detail: 'Call, message, and review deals without leaving.',
+  },
+  {
+    icon: Zap,
+    label: 'Zero missed leads',
+    detail: 'AI reception picks up every call, day or night.',
+  },
 ]
 
 const TAGLINE =
   'Twiching combines cloud calling, AI reception, omnichannel inboxes, CRM sync, and live analytics into one modern workspace.'
 
 export function HeroStoryPanel() {
-  const [activeStep, setActiveStep] = useState(0)
-  const [typing, setTyping]         = useState(true)
+  const [activeStep, setActiveStep]   = useState(0)
+  const [typing, setTyping]           = useState(true)
   const [showTagline, setShowTagline] = useState(false)
-  const dotRefs  = useRef<(HTMLDivElement | null)[]>([])
-  const lineRef  = useRef<HTMLDivElement>(null)
-  const panelRef = useRef<HTMLDivElement>(null)
+  const [completedSteps, setCompletedSteps] = useState<number[]>([])
 
-  // Animate progress dot + connecting line whenever step changes
-  useEffect(() => {
-    const dot = dotRefs.current[activeStep]
-    if (!dot) return
-    gsap.fromTo(dot, { scale: 0, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: 'back.out(1.7)' })
+  const panelRef  = useRef<HTMLDivElement>(null)
+  const barRef    = useRef<HTMLDivElement>(null)
+  const rowRefs   = useRef<(HTMLDivElement | null)[]>([])
 
-    // grow line from top to active dot
-    if (lineRef.current) {
-      const pct = activeStep === 0 ? 0 : (activeStep / (STEPS.length - 1)) * 100
-      gsap.to(lineRef.current, { height: `${pct}%`, duration: 0.45, ease: 'power2.out' })
-    }
-  }, [activeStep])
-
-  // Entrance animation for panel
+  // Panel entrance
   useEffect(() => {
     if (!panelRef.current) return
-    gsap.fromTo(panelRef.current, { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.7, ease: 'power3.out', delay: 0.4 })
+    gsap.fromTo(
+      panelRef.current,
+      { opacity: 0, y: 28 },
+      { opacity: 1, y: 0, duration: 0.75, ease: 'power3.out', delay: 0.5 }
+    )
   }, [])
+
+  // Progress bar and row highlight when step changes
+  useEffect(() => {
+    const pct = ((activeStep) / (STEPS.length - 1)) * 100
+    gsap.to(barRef.current, { width: `${pct}%`, duration: 0.55, ease: 'power2.out' })
+
+    const row = rowRefs.current[activeStep]
+    if (row) {
+      gsap.fromTo(row, { opacity: 0, x: -10 }, { opacity: 1, x: 0, duration: 0.4, ease: 'power2.out' })
+    }
+  }, [activeStep])
 
   const handleTypingComplete = useCallback(() => {
     setTyping(false)
@@ -47,80 +68,98 @@ export function HeroStoryPanel() {
 
     if (next < STEPS.length) {
       setTimeout(() => {
+        setCompletedSteps(prev => [...prev, activeStep])
         setActiveStep(next)
         setTyping(true)
-      }, 600)
+      }, 700)
     } else {
-      // all steps done — show tagline
-      setTimeout(() => setShowTagline(true), 500)
+      setCompletedSteps(prev => [...prev, activeStep])
+      setTimeout(() => setShowTagline(true), 600)
     }
   }, [activeStep])
 
   return (
     <div ref={panelRef} className="flex-1 flex justify-center lg:justify-end opacity-0">
-      <div
-        className="relative rounded-2xl border border-accent/20 bg-white/60 backdrop-blur-md shadow-[0_8px_40px_-12px_rgba(26,188,217,0.18)] p-8 w-full max-w-[420px]"
-      >
-        {/* Terminal-style top bar */}
-        <div className="flex items-center gap-1.5 mb-6">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#ff5f57]" />
-          <span className="w-2.5 h-2.5 rounded-full bg-[#ffbd2e]" />
-          <span className="w-2.5 h-2.5 rounded-full bg-[#28c840]" />
-          <span className="ml-3 text-[11px] font-mono text-[#2a5560]/60 tracking-widest uppercase">twiching.workspace</span>
+      <div className="w-full max-w-[400px] rounded-2xl overflow-hidden border border-[#0d2e35]/12 bg-white/70 backdrop-blur-xl shadow-[0_20px_60px_-15px_rgba(13,46,53,0.18),0_0_0_1px_rgba(26,188,217,0.08)]">
+
+        {/* Top progress bar track */}
+        <div className="h-[3px] bg-accent/10 relative">
+          <div
+            ref={barRef}
+            className="absolute left-0 top-0 h-full bg-gradient-to-r from-accent to-[#0e8fa8] rounded-full"
+            style={{ width: '0%' }}
+          />
         </div>
 
-        {/* Steps with vertical timeline */}
-        <div className="relative flex flex-col gap-0">
-          {/* Track line (bg) */}
-          <div className="absolute left-[7px] top-3 bottom-3 w-[2px] bg-accent/10 rounded-full" />
-          {/* Active fill line */}
-          <div
-            ref={lineRef}
-            className="absolute left-[7px] top-3 w-[2px] bg-accent rounded-full"
-            style={{ height: '0%' }}
-          />
+        {/* Header */}
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-[#0d2e35]/8">
+          <div className="flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+            <span className="text-[11px] font-mono font-medium text-[#0d2e35]/50 tracking-widest uppercase">
+              twiching.live
+            </span>
+          </div>
+          <span className="text-[11px] font-mono text-accent/70">
+            {activeStep + 1} / {STEPS.length}
+          </span>
+        </div>
 
+        {/* Steps */}
+        <div className="px-5 py-4 flex flex-col divide-y divide-[#0d2e35]/6">
           {STEPS.map((step, i) => {
-            const isDone   = i < activeStep
-            const isActive = i === activeStep
-            const isFuture = i > activeStep
+            const Icon      = step.icon
+            const isDone    = completedSteps.includes(i)
+            const isActive  = i === activeStep
+            const isFuture  = !isDone && !isActive
 
             return (
-              <div key={step.label} className="relative flex items-start gap-5 pb-7 last:pb-0">
-                {/* Dot */}
-                <div
-                  ref={(el) => { dotRefs.current[i] = el }}
-                  className={[
-                    'mt-1 w-4 h-4 rounded-full border-2 flex-shrink-0 z-10 transition-colors duration-300',
-                    isDone   ? 'bg-accent border-accent'        : '',
-                    isActive ? 'bg-white border-accent shadow-[0_0_0_4px_rgba(26,188,217,0.18)]' : '',
-                    isFuture ? 'bg-white/50 border-accent/20'   : '',
-                  ].join(' ')}
-                />
+              <div
+                key={step.label}
+                ref={(el) => { rowRefs.current[i] = el }}
+                className={[
+                  'flex items-start gap-3.5 py-4 transition-opacity duration-300',
+                  isFuture ? 'opacity-30' : 'opacity-100',
+                ].join(' ')}
+              >
+                {/* Icon bubble */}
+                <div className={[
+                  'flex-shrink-0 w-8 h-8 rounded-xl flex items-center justify-center transition-colors duration-300',
+                  isDone   ? 'bg-accent/15' : '',
+                  isActive ? 'bg-accent text-white shadow-[0_4px_12px_-2px_rgba(26,188,217,0.5)]' : '',
+                  isFuture ? 'bg-[#0d2e35]/8' : '',
+                ].join(' ')}>
+                  <Icon
+                    size={14}
+                    className={[
+                      'transition-colors duration-300',
+                      isDone   ? 'text-accent' : '',
+                      isActive ? 'text-white'  : '',
+                      isFuture ? 'text-[#0d2e35]/40' : '',
+                    ].join(' ')}
+                    strokeWidth={2.2}
+                  />
+                </div>
 
                 {/* Text */}
-                <div className="flex flex-col gap-1 min-h-[42px]">
-                  <span
-                    className={[
-                      'font-mono text-sm font-semibold transition-colors duration-300',
-                      isDone   ? 'text-accent/60' : '',
-                      isActive ? 'text-[#0d2e35]' : '',
-                      isFuture ? 'text-[#0d2e35]/30' : '',
-                    ].join(' ')}
-                  >
+                <div className="flex flex-col gap-0.5 pt-0.5 min-w-0">
+                  <span className={[
+                    'text-[13px] font-semibold leading-tight',
+                    isDone   ? 'text-accent/70'  : '',
+                    isActive ? 'text-[#0d2e35]'  : '',
+                    isFuture ? 'text-[#0d2e35]'  : '',
+                  ].join(' ')}>
                     {isActive && typing ? (
                       <TypeWritter
-                        text={`> ${step.label}`}
-                        charDelay={50}
+                        text={step.label}
+                        charDelay={45}
                         onComplete={handleTypingComplete}
-                        className="text-accent"
                       />
                     ) : (
-                      `> ${step.label}`
+                      step.label
                     )}
                   </span>
                   {(isDone || isActive) && (
-                    <span className="text-[12px] text-[#2a5560]/70 leading-snug">{step.detail}</span>
+                    <span className="text-[11.5px] text-[#2a5560]/65 leading-snug">{step.detail}</span>
                   )}
                 </div>
               </div>
@@ -128,16 +167,20 @@ export function HeroStoryPanel() {
           })}
         </div>
 
-        {/* Tagline */}
-        {showTagline && (
-          <div className="mt-6 pt-5 border-t border-accent/15">
+        {/* Tagline footer */}
+        <div className={[
+          'px-5 pb-5 transition-opacity duration-500',
+          showTagline ? 'opacity-100' : 'opacity-0 pointer-events-none',
+        ].join(' ')}>
+          <div className="pt-4 border-t border-accent/15">
             <TypeWritter
               text={TAGLINE}
-              charDelay={18}
-              className="block text-[12.5px] font-mono text-[#2a5560]/80 leading-relaxed"
+              charDelay={14}
+              className="block text-[11.5px] font-mono text-[#2a5560]/75 leading-relaxed"
             />
           </div>
-        )}
+        </div>
+
       </div>
     </div>
   )
