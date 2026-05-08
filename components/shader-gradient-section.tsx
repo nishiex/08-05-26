@@ -23,7 +23,7 @@ export function ShaderGradientSection() {
         const gradientOptions: Partial<ShaderGradientInput> = {
           pixelDensity: 1.5,
           preset: 'interstella' as ShaderGradientPresetName,
-          color1: '#3fe3ee',
+          color1: '#caf0f8',
           color2: '#ffffff',
           color3: '#d6f3f5',
           cameraZoom: 25.00,
