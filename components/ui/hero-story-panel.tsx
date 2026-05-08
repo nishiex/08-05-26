@@ -118,7 +118,7 @@ export function HeroStoryPanel() {
 
   return (
     <div ref={panelRef} className="flex-1 flex items-center justify-center lg:justify-end opacity-0">
-      <div className="w-full max-w-[400px] rounded-2xl overflow-hidden border border-[#0d2e35]/10 bg-white shadow-[0_16px_48px_-12px_rgba(13,46,53,0.14)]">
+      <div className="w-full max-w-[400px] rounded-2xl overflow-hidden border border-[#0d2e35] bg-white shadow-[0_16px_48px_-12px_rgba(13,46,53,0.14)]">
 
         {/* Header */}
         <div className="flex items-center gap-2 px-5 py-3.5 border-b border-[#0d2e35]/8">
